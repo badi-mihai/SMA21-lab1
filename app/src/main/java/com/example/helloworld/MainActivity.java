@@ -18,12 +18,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.helloworld.lifecycle.ActivityA;
+import com.example.helloworld.lifecycle.ActivityB;
+import com.example.helloworld.lifecycle.ActivityC;
+
 public class MainActivity extends AppCompatActivity implements
         AdapterView.OnItemSelectedListener{
     private EditText eName;
     private Button bName;
     private Button bShare;
     private Button bSearch;
+    private Button buttonA;
+    private Button buttonB;
+    private Button buttonC;
     private Spinner spin;
     private final String[] colors = {"White", "Red", "Green", "Blue", "Yellow"};
 
@@ -36,6 +43,9 @@ public class MainActivity extends AppCompatActivity implements
         bName = (Button) findViewById(R.id.bClick);
         bShare = (Button) findViewById(R.id.bShare);
         bSearch = (Button) findViewById(R.id.bSearch);
+        buttonA = (Button) findViewById(R.id.buttonA);
+        buttonB = (Button) findViewById(R.id.buttonB);
+        buttonC = (Button) findViewById(R.id.buttonC);
         spin = (Spinner) findViewById(R.id.spinner);
 
         spin.setOnItemSelectedListener(this);
@@ -99,6 +109,48 @@ public class MainActivity extends AppCompatActivity implements
                 // Try to invoke the intent.
                 try {
                     startActivity(sendIntent);
+                } catch (ActivityNotFoundException e) {
+                    // Define what your app should do if no activity can handle the intent.
+                }
+            }
+        });
+
+        buttonA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ActivityA.class);
+
+                // Try to invoke the intent.
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    // Define what your app should do if no activity can handle the intent.
+                }
+            }
+        });
+
+        buttonB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ActivityB.class);
+
+                // Try to invoke the intent.
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    // Define what your app should do if no activity can handle the intent.
+                }
+            }
+        });
+
+        buttonC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ActivityC.class);
+
+                // Try to invoke the intent.
+                try {
+                    startActivity(intent);
                 } catch (ActivityNotFoundException e) {
                     // Define what your app should do if no activity can handle the intent.
                 }
