@@ -3,8 +3,11 @@ package com.example.helloworld;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +22,8 @@ public class MainActivity extends AppCompatActivity implements
         AdapterView.OnItemSelectedListener{
     private EditText eName;
     private Button bName;
+    private Button bShare;
+    private Button bSearch;
     private Spinner spin;
     private final String[] colors = {"White", "Red", "Green", "Blue", "Yellow"};
 
@@ -29,11 +34,13 @@ public class MainActivity extends AppCompatActivity implements
 
         eName = (EditText) findViewById(R.id.eName);
         bName = (Button) findViewById(R.id.bClick);
+        bShare = (Button) findViewById(R.id.bShare);
+        bSearch = (Button) findViewById(R.id.bSearch);
         spin = (Spinner) findViewById(R.id.spinner);
 
         spin.setOnItemSelectedListener(this);
 
-        //Creating the ArrayAdapter instance having the country list
+        //Creating the ArrayAdapter instance having the color list
         ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item, colors);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
@@ -44,8 +51,6 @@ public class MainActivity extends AppCompatActivity implements
         bName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //tName.setText("Hello, " + eName.getText().toString());
-
                 builder.setTitle(R.string.dialog_title)
                         .setMessage("Hello, " + eName.getText().toString())
                         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -66,7 +71,42 @@ public class MainActivity extends AppCompatActivity implements
                 alert.show();
             }
         });
+
+        bShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create the text message with a string.
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, eName.getText().toString());
+                sendIntent.setType("text/plain");
+
+                // Try to invoke the intent.
+                try {
+                    startActivity(sendIntent);
+                } catch (ActivityNotFoundException e) {
+                    // Define what your app should do if no activity can handle the intent.
+                }
+            }
+        });
+
+        bSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create the text message with a string.
+                Intent sendIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + eName.getText().toString()));
+
+                // Try to invoke the intent.
+                try {
+                    startActivity(sendIntent);
+                } catch (ActivityNotFoundException e) {
+                    // Define what your app should do if no activity can handle the intent.
+                }
+            }
+        });
     }
+
+
 
     //Performing action onItemSelected and onNothing selected
     @Override
